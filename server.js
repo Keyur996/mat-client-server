@@ -3,16 +3,19 @@ import cors from "cors";
 import mongoose from "mongoose";
 import clientRoutes from "./routes/client.routes.js";
 import { dbConfig } from "./database/db.js";
+import morgan from "morgan";
+// import chalk from "chalk";
 // import path from "path";
 
 // Connect To mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect(dbConfig.db, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dbConfig.db, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(() => console.log('Database sucessfully connected'))
     .catch(err => console.log(err));
 
 // Setting up middleware
 const app = express();
+app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());

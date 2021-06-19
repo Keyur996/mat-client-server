@@ -11,7 +11,7 @@ clientRoutes.route('/').get((req, res) => {
 })
 
 // Add Employee
-clientRoutes.route('/create').post((req, res) => {
+clientRoutes.route('/').post((req, res) => {
     Client.create(req.body, (error, data) => {
         if (error) {
             res.status(404).json({ data: null, message: err.message })
@@ -21,14 +21,14 @@ clientRoutes.route('/create').post((req, res) => {
     })
 });
 
-clientRoutes.route("/read/:id").get((req, res) => {
+clientRoutes.route("/clients/:id").get((req, res) => {
     Client.findById(req.params.id, (err, data) => {
         if (err) res.status(404).json({ data: null, message: err.message });
         else res.status(200).json({ data, message: "Client received" });
     })
 });
 
-clientRoutes.route('/update/:id').put((req, res,) => {
+clientRoutes.route('/clients/:id').put((req, res,) => {
     Client.findByIdAndUpdate(req.params.id, {
         $set: req.body
     }, (error, data) => {
@@ -40,8 +40,8 @@ clientRoutes.route('/update/:id').put((req, res,) => {
     })
 });
 
-clientRoutes.route('/delete/:id').delete((req, res) => {
-    Client.findOneAndRemove(req.params.id, (err, data) => {
+clientRoutes.route('/clients/:id').delete((req, res) => {
+    Client.findByIdAndDelete(req.params.id, (err, data) => {
         if (err) res.status(404).json({ message: err.message });
         else res.status(200).json({ msg: 'Data Deleted' })
     })
