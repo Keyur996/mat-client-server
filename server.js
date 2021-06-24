@@ -4,6 +4,8 @@ import clientRoutes from "./routes/client.routes.js";
 import morgan from "morgan";
 import dotEnv from "dotenv";
 import { connection } from "./db/connection.js";
+import morgan from "morgan";
+// import chalk from "chalk";
 // import path from "path";
 dotEnv.config();
 
@@ -23,11 +25,6 @@ const port = process.env.PORT || 5000;
 const server = app.listen(port, () =>
   console.log(`Server is Running on ${port}`)
 );
-
-// Find 404 and hand over to error handler
-// app.use((req, res, next) => {
-//     next(createError(404));
-// });
 
 // error handler
 app.use(function (err, req, res, next) {
