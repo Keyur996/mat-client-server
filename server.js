@@ -4,7 +4,6 @@ import clientRoutes from "./routes/client.routes.js";
 import morgan from "morgan";
 import dotEnv from "dotenv";
 import { connection } from "./db/connection.js";
-import morgan from "morgan";
 // import chalk from "chalk";
 // import path from "path";
 dotEnv.config();
@@ -14,10 +13,10 @@ connection();
 
 // Setting up middleware
 const app = express();
+app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 app.use("/api", clientRoutes);
 
 // server listen
@@ -26,9 +25,12 @@ const server = app.listen(port, () =>
   console.log(`Server is Running on ${port}`)
 );
 
-// error handler
+// error handler middleware
 app.use(function (err, req, res, next) {
-  console.error(err.message); // Log error message in our server's console
-  if (!err.statusCode) err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
-  res.status(err.statusCode).json({ message: err.message }); // All HTTP requests must have a response, so let's send back an error with its status code and message
+  console.error(err.stack);
+  res.status(500).send({
+    status: 500,
+    message: err.message,
+    body: {},
+  });
 });

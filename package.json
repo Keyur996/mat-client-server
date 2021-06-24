@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node server",
-    "start:dev": "npx nodemon server"
+    "dev": "npx nodemon server"
   },
   "keywords": [],
   "author": "",
